@@ -1,7 +1,7 @@
 # --- The New, Simpler Dockerfile ---
 
 # Stage 1: Use the .NET SDK to build the project
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /source
 
 # Copy ALL files from your GitHub repository into the '/source' directory in the container
