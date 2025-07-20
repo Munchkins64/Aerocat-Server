@@ -1,0 +1,197 @@
+﻿<Window x:Class="Aerocat.Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Aerocat" Height="500" Width="280"
+        WindowStyle="SingleBorderWindow" ResizeMode="CanMinimize"
+        Background="#FF0066CC">
+
+    <Window.Resources>
+        <!-- Gradient brushes for that classic MSN look -->
+        <LinearGradientBrush x:Key="TitleBarBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FF4A90E2" Offset="0"/>
+            <GradientStop Color="#FF2E5BBA" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="ContactItemBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FFF0F8FF" Offset="0"/>
+            <GradientStop Color="#FFE6F3FF" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="ContactItemHoverBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FFCCE7FF" Offset="0"/>
+            <GradientStop Color="#FFA6D8FF" Offset="1"/>
+        </LinearGradientBrush>
+
+        <!-- Button styles -->
+        <Style x:Key="ClassicButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#FFE1E1E1"/>
+            <Setter Property="BorderBrush" Value="#FF999999"/>
+            <Setter Property="Padding" Value="5,2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="1" 
+                                CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFCCCCCC"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FFAAAAAA"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Contact list item style -->
+        <Style x:Key="ContactItemStyle" TargetType="ListBoxItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border Name="ContactBorder" Background="{StaticResource ContactItemBrush}" 
+                                BorderBrush="#FFCCCCCC" BorderThickness="0,0,0,1" Padding="5">
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Width="16" Height="16" Margin="0,0,8,0">
+                                    <Ellipse.Fill>
+                                        <SolidColorBrush Color="{Binding StatusColor}"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <TextBlock Text="{Binding DisplayName}" VerticalAlignment="Center" 
+                                          FontSize="11" FontFamily="Tahoma"/>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ContactBorder" Property="Background" 
+                                        Value="{StaticResource ContactItemHoverBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="ContactBorder" Property="Background" Value="#FF316AC5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="35"/>
+        </Grid.RowDefinitions>
+
+        <!-- Top user info section -->
+        <Border Grid.Row="0" Background="{StaticResource TitleBarBrush}">
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- User avatar -->
+                <Border Grid.Column="0" Width="40" Height="40" Background="#FFDDDDDD" 
+                        BorderBrush="#FF999999" BorderThickness="1" CornerRadius="3">
+                    <TextBlock Text="👤" FontSize="20" HorizontalAlignment="Center" 
+                              VerticalAlignment="Center"/>
+                </Border>
+
+                <!-- User info -->
+                <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center">
+                    <TextBlock x:Name="UserDisplayName" Text="Your Name Here" 
+                              Foreground="White" FontWeight="Bold" FontSize="12" FontFamily="Tahoma"/>
+                    <TextBlock x:Name="UserStatusMessage" Text="Available" 
+                              Foreground="White" FontSize="10" FontFamily="Tahoma" Opacity="0.9"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Status/Search bar -->
+        <Border Grid.Row="1" Background="#FFF0F0F0" BorderBrush="#FFCCCCCC" BorderThickness="0,1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+
+                <ComboBox Grid.Column="0" x:Name="StatusComboBox" Height="22" Margin="5,4" 
+                         FontSize="10" FontFamily="Tahoma">
+                    <ComboBoxItem Content="🟢 Online" IsSelected="True"/>
+                    <ComboBoxItem Content="🟡 Away"/>
+                    <ComboBoxItem Content="🔴 Busy"/>
+                    <ComboBoxItem Content="⚫ Appear Offline"/>
+                </ComboBox>
+
+                <TextBox Grid.Column="1" x:Name="SearchBox" Height="22" Margin="2,4" 
+                        Text="Search contacts..." Foreground="#FF666666" 
+                        FontSize="10" FontFamily="Tahoma"/>
+
+                <Button Grid.Column="2" Content="Menu" Height="22" Margin="2,4" 
+                       FontSize="9" FontFamily="Tahoma" Style="{StaticResource ClassicButtonStyle}"/>
+            </Grid>
+        </Border>
+
+        <!-- Contact list -->
+        <Border Grid.Row="2" Background="White" BorderBrush="#FFCCCCCC" BorderThickness="1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <!-- Online contacts section -->
+                    <Expander x:Name="OnlineExpander" IsExpanded="True" 
+                             Background="#FFE8F4FD" BorderBrush="#FFCCCCCC" BorderThickness="0,0,0,1">
+                        <Expander.Header>
+                            <TextBlock Text="📱 Online (3/15)" FontWeight="Bold" 
+                                      FontSize="11" FontFamily="Tahoma" Margin="5,2"/>
+                        </Expander.Header>
+                        <ListBox x:Name="OnlineContactsList" BorderThickness="0" 
+                                ItemContainerStyle="{StaticResource ContactItemStyle}">
+                        </ListBox>
+                    </Expander>
+
+                    <!-- Offline contacts section -->
+                    <Expander x:Name="OfflineExpander" IsExpanded="False" 
+                             Background="#FFE8F4FD" BorderBrush="#FFCCCCCC" BorderThickness="0,0,0,1">
+                        <Expander.Header>
+                            <TextBlock Text="💤 Offline (12/15)" FontWeight="Bold" 
+                                      FontSize="11" FontFamily="Tahoma" Margin="5,2"/>
+                        </Expander.Header>
+                        <ListBox x:Name="OfflineContactsList" BorderThickness="0" 
+                                ItemContainerStyle="{StaticResource ContactItemStyle}">
+                        </ListBox>
+                    </Expander>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Bottom toolbar -->
+        <Border Grid.Row="3" Background="#FFF0F0F0" BorderBrush="#FFCCCCCC" BorderThickness="0,1,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Aerocat v1.0" 
+                          VerticalAlignment="Center" Margin="8,0" 
+                          FontSize="9" FontFamily="Tahoma" Foreground="#FF666666"/>
+
+                <Button Grid.Column="1" Content="📧" Width="25" Height="25" Margin="2" 
+                       ToolTip="Email" Style="{StaticResource ClassicButtonStyle}"/>
+                <Button Grid.Column="2" Content="🎵" Width="25" Height="25" Margin="2" 
+                       ToolTip="Music" Style="{StaticResource ClassicButtonStyle}"/>
+                <Button Grid.Column="3" Content="⚙️" Width="25" Height="25" Margin="2" 
+                       ToolTip="Settings" Style="{StaticResource ClassicButtonStyle}"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
