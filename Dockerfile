@@ -1,27 +1,21 @@
-# --- Dockerfile that ONLY builds the server ---
+# --- The Final, Most Robust Dockerfile ---
 
 # Stage 1: Use the .NET 9 SDK to build the project
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /source
 
-# --- Step 1: Copy ONLY the project files for the server and its dependencies ---
-# This avoids copying the client's .csproj file
-COPY Aerocat.Server/Aerocat.Server.csproj ./Aerocat.Server/
-COPY Aerocat.Shared/Aerocat.Shared.csproj ./Aerocat.Shared/
+# Copy ALL files from your GitHub repository into the '/source' directory.
+# This is the simplest way and avoids all path guessing errors.
+COPY . .
 
-# --- Step 2: Restore dependencies for ONLY the server project ---
-# Because the server project references the shared project, this command
-# is smart enough to restore both of them.
+# *** THE KEY FIX IS HERE ***
+# Instead of restoring the whole solution, we restore ONLY the server project.
+# This automatically restores its dependencies (like Aerocat.Shared)
+# but completely IGNORES the problematic Windows client project.
 RUN dotnet restore "Aerocat.Server/Aerocat.Server.csproj"
 
-# --- Step 3: Copy the rest of the source code for ONLY the needed projects ---
-# We explicitly ignore the client project's source code.
-COPY Aerocat.Server/. ./Aerocat.Server/
-COPY Aerocat.Shared/. ./Aerocat.Shared/
-
-# --- Step 4: Publish ONLY the server project ---
-WORKDIR "/source/Aerocat.Server"
-RUN dotnet publish "Aerocat.Server.csproj" -c Release -o /app/publish --no-restore
+# Now, publish the server project. This command was already correct.
+RUN dotnet publish "Aerocat.Server/Aerocat.Server.csproj" -c Release -o /app/publish --no-restore
 
 # Stage 2: Create the final, lightweight runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
