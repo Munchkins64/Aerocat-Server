@@ -1,0 +1,11 @@
+C:\Users\ananm\Documents\Cat\Aerocat\Aerocat\Aerocat-Shared\bin\Debug\net9.0\Aerocat-Shared.deps.json
+C:\Users\ananm\Documents\Cat\Aerocat\Aerocat\Aerocat-Shared\bin\Debug\net9.0\Aerocat-Shared.dll
+C:\Users\ananm\Documents\Cat\Aerocat\Aerocat\Aerocat-Shared\bin\Debug\net9.0\Aerocat-Shared.pdb
+C:\Users\ananm\Documents\Cat\Aerocat\Aerocat\Aerocat-Shared\obj\Debug\net9.0\Aerocat-Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ananm\Documents\Cat\Aerocat\Aerocat\Aerocat-Shared\obj\Debug\net9.0\Aerocat-Shared.AssemblyInfoInputs.cache
+C:\Users\ananm\Documents\Cat\Aerocat\Aerocat\Aerocat-Shared\obj\Debug\net9.0\Aerocat-Shared.AssemblyInfo.cs
+C:\Users\ananm\Documents\Cat\Aerocat\Aerocat\Aerocat-Shared\obj\Debug\net9.0\Aerocat-Shared.csproj.CoreCompileInputs.cache
+C:\Users\ananm\Documents\Cat\Aerocat\Aerocat\Aerocat-Shared\obj\Debug\net9.0\Aerocat-Shared.dll
+C:\Users\ananm\Documents\Cat\Aerocat\Aerocat\Aerocat-Shared\obj\Debug\net9.0\refint\Aerocat-Shared.dll
+C:\Users\ananm\Documents\Cat\Aerocat\Aerocat\Aerocat-Shared\obj\Debug\net9.0\Aerocat-Shared.pdb
+C:\Users\ananm\Documents\Cat\Aerocat\Aerocat\Aerocat-Shared\obj\Debug\net9.0\ref\Aerocat-Shared.dll
